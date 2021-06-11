@@ -41,7 +41,7 @@ $(TARGET_BIN): $(TARGET_STRIPPED) $(ELFLOADER)
 
 git_version.h: describesimple.sh
 	@echo "  GITVER    $@"
-	@echo 'const char git_version[] = "'`./describesimple.sh`'";' > git_version.h
+	@echo '#define GIT_VERSION "'`./describesimple.sh`'"' > git_version.h
 
 clean: myclean
 

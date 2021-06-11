@@ -28,6 +28,7 @@ Copyright (C) 2009		John Kelley <wiidev@kelley.ca>
 #include "boot2.h"
 #include "powerpc.h"
 #include "panic.h"
+#include "git_version.h"
 
 #define MINI_VERSION_MAJOR 1
 #define MINI_VERSION_MINOR 3
@@ -37,7 +38,6 @@ static volatile ipc_request out_queue[IPC_OUT_SIZE] ALIGNED(32) MEM2_BSS;
 static volatile ipc_request slow_queue[IPC_SLOW_SIZE];
 
 extern char __mem2_area_start[];
-extern const char git_version[];
 
 // These defines are for the ARMCTRL regs
 // See http://wiibrew.org/wiki/Hardware/IPC
@@ -145,7 +145,7 @@ static u32 process_slow(volatile ipc_request *req)
 					ipc_post(req->code, req->tag, 1, MINI_VERSION_MAJOR << 16 | MINI_VERSION_MINOR);
 					break;
 				case IPC_SYS_GETGITS:
-					strlcpy((char *)req->args[0], git_version, 32);
+					strlcpy((char *)req->args[0], GIT_VERSION, 32);
 					dc_flushrange((void *)req->args[0], 32);
 					ipc_post(req->code, req->tag, 0);
 					break;
