@@ -39,9 +39,6 @@ $(TARGET_BIN): $(TARGET_STRIPPED) $(ELFLOADER)
 	@echo  "MAKEBIN	$@"
 	@$(MAKEBIN) $(ELFLOADER) $< $@
 
-upload: $(TARGET_BIN)
-	@$(WIIDEV)/bin/bootmii -a $<
-
 git_version.h: describesimple.sh
 	@echo "  GITVER    $@"
 	@echo 'const char git_version[] = "'`./describesimple.sh`'";' > git_version.h
