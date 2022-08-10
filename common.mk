@@ -7,7 +7,7 @@ OBJCOPY = $(PREFIX)objcopy
 RANLIB = $(PREFIX)ranlib
 STRIP = $(PREFIX)strip
 
-BIN2S = $(DEVKITPPC)/bin/bin2s
+BIN2S = $(DEVKITPRO)/tools/bin/bin2s
 
 ifeq ($(NOMAPFILE),)
 LDFLAGS += -Wl,-Map,$(TARGET).map
@@ -48,7 +48,7 @@ clean:
 
 define bin2o
 	@echo "  BIN2S     $(notdir $<)"
-	@$(BIN2S) -a 32 $< | $(AS) -o $(@)
+	@$(BIN2S) -a 32 $< | $(AS) -mbig-endian -o $(@)
 	@echo "extern const u8" `(echo $(<F) | sed -e 's/^\([0-9]\)/_\1/' | tr . _)`"_end[];" > `(echo $(<F) | tr . _)`.h
 	@echo "extern const u8" `(echo $(<F) | sed -e 's/^\([0-9]\)/_\1/' | tr . _)`"[];" >> `(echo $(<F) | tr . _)`.h
 	@echo "extern const u32" `(echo $(<F) | sed -e 's/^\([0-9]\)/_\1/' | tr . _)`_size";" >> `(echo $(<F) | tr . _)`.h
