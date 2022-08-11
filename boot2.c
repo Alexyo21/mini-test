@@ -315,6 +315,7 @@ u32 boot2_run(u32 tid_hi, u32 tid_lo) {
 	return vector;
 }
 
+#ifdef CAN_HAZ_IPC
 u32 boot2_ipc(volatile ipc_request *req)
 {
 	u32 vector = 0;
@@ -345,4 +346,5 @@ u32 boot2_ipc(volatile ipc_request *req)
 
 	return vector;
 }
+#endif
 
