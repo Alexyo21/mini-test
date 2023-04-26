@@ -17,8 +17,8 @@
 
 #ifndef _DISKIO
 
-#define _READONLY	1	/* 1: Read-only mode */
-#define _USE_IOCTL	0
+#define _READONLY	0	/* 1: Read-only mode */
+#define _USE_IOCTL	1
 
 #include "integer.h"
 
