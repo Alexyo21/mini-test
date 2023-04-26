@@ -29,6 +29,7 @@ Copyright (C) 2009		John Kelley <wiidev@kelley.ca>
 #include "nand.h"
 #include "boot2.h"
 #include "git_version.h"
+#include "debug.h"
 
 #define PPC_BOOT_FILE "/bootmii/ppcboot.elf"
 
@@ -105,7 +106,12 @@ u32 _main(void *base)
 	gecko_printf("IPC mainloop done!\n");
 	gecko_printf("Shutting down IPC...\n");
 	ipc_shutdown();
+	
+	acrreg_dump();
+	memreg_dump();
 
+	
+	
 shutdown:
 	gecko_printf("Shutting down interrupts...\n");
 	irq_shutdown();
