@@ -29,7 +29,6 @@ Copyright (C) 2009		John Kelley <wiidev@kelley.ca>
 #include "nand.h"
 #include "boot2.h"
 #include "git_version.h"
-#include "debug.h"
 
 #define PPC_BOOT_FILE "/bootmii/ppcboot.elf"
 
