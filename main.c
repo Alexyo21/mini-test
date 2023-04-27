@@ -106,11 +106,6 @@ u32 _main(void *base)
 	gecko_printf("Shutting down IPC...\n");
 	ipc_shutdown();
 	
-	acrreg_dump();
-	memreg_dump();
-
-	
-	
 shutdown:
 	gecko_printf("Shutting down interrupts...\n");
 	irq_shutdown();
