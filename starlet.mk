@@ -6,7 +6,7 @@ PREFIX = $(DEVKITARM)/bin/arm-none-eabi-
 
 CFLAGS = -mbig-endian -mcpu=arm926ej-s
 CFLAGS += -fomit-frame-pointer -ffunction-sections
-CFLAGS += -Wall -Wextra -Os -pipe
+CFLAGS += -Wall -Wextra -Os -flto -pipe
 ASFLAGS =
-LDFLAGS = -mbig-endian -n -nostartfiles -nodefaultlibs -Wl,-gc-sections
+LDFLAGS = -Os -flto -mbig-endian -n -nostartfiles -nodefaultlibs -Wl,-gc-sections
 
