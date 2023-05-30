@@ -255,31 +255,30 @@ void boot2_init(void) {
 	boot2_initialized = 1;
 }
 
-static u32 match[] = {
-	0xBC024708,
-	1,
-	2,
-};
+static char titlebootpattern[] = { 0xBC, 0x02, 0x47, 0x08, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x02 };
 
-static u32 patch[] = {
-	0xBC024708,
-	0, // tid hi
-	0, // tid low
-};
+static char ahbprotpattern[] = { 0x68, 0x5B, 0x22, 0xEC, 0x00, 0x52, 0x18, 0x9B, 0x68, 0x1B, 0x46, 0x98, 0x07, 0xDB };
+static char ahbprotpatch[] = { 0x23, 0xFF };
 
-static u32 boot2_patch(ioshdr *hdr) {
-	u32 i, num_matches = 0;
+static void boot2_patch(ioshdr *hdr, char *pattern, size_t patternlen, int offset, char *patch, size_t patchlen) {
+	_Bool patched = 0;
+	u32 i;
 	u8 *ptr = (u8 *) hdr + hdr->hdrsize + hdr->loadersize;
 
 	for (i = 0; i < hdr->elfsize; i += 1) {
-		if (memcmp(ptr+i, match, sizeof(match)) == 0) {
-			num_matches++;
-			memcpy(ptr+i, patch, sizeof(patch));
-			gecko_printf("patched data @%08x\n", (u32)ptr+i);
+		if (memcmp(ptr + i, pattern, patternlen) == 0) {
+			if (patched) {
+				gecko_printf("More than one occurrence of pattern found; panicking\n");
+				panic2(0, PANIC_PATCHFAIL);
+			}
+			patched = 1;
+			memcpy(ptr + i + offset, patch, patchlen);
+			gecko_printf("Patched data at 0x%08X\n", (u32)ptr + i);
 		}
 	}
 
-	return num_matches;
+	if (!patched)
+		gecko_printf("Failed to find pattern\n");
 }
 
 u32 boot2_run(u32 tid_hi, u32 tid_lo) {
@@ -296,18 +295,17 @@ u32 boot2_run(u32 tid_hi, u32 tid_lo) {
 
 	hdr = (ioshdr *) 0x11000000;
 
-	if ((tid_hi != match[1]) || (tid_lo != match[2])) {
-		patch[1] = tid_hi;
-		patch[2] = tid_lo;
+	if (tid_hi != 1 || tid_lo != 2) {
+		u32 titlebootpatch[2] = { tid_hi, tid_lo };
 
-		num_matches = boot2_patch(hdr);
+		gecko_printf("Patching boot2 to launch title %08x-%08x\n", tid_hi, tid_lo);
 
-		if (num_matches != 1) {
-			gecko_printf("Wrong number of patches (matched %d times, expected 1), panicking\n", num_matches);
-			panic2(0, PANIC_PATCHFAIL);
-		}
+		boot2_patch(hdr, titlebootpattern, 12, 4, &titlebootpatch, 8);
 	}
-	
+
+	gecko_printf("Patching boot2 to keep AHB access\n");
+	boot2_patch(hdr, ahbprotpattern, 14, 8, ahbprotpatch, 2);
+
 	hdr->argument = 0x42;
 
 	u32 vector = 0x11000000 + hdr->hdrsize;
