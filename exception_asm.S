@@ -19,35 +19,33 @@ Copyright (C) 2008, 2009	Hector Martin "marcan" <marcan@marcansoft.com>
 .extern __excstack_addr
 .extern exc_handler
 
+# Setup a stack for some exception modes
 exc_setup_stack:
 	mrs	r0, cpsr
 
-	@ Switch to FIQ mode
+	# Switch to FIQ mode
 	msr cpsr_c, #0xd1
-	@ Setup exception stack
 	ldr	sp, =__excstack_addr
 
-	@ Switch to SVC mode
+	# Switch to SVC mode
 	msr cpsr_c, #0xd3
-	@ Setup exception stack
 	ldr	sp, =__excstack_addr
 
-	@ Switch to ABORT mode
+	# Switch to ABORT mode
 	msr cpsr_c, #0xd7
-	@ Setup exception stack
 	ldr	sp, =__excstack_addr
 
-	@ Switch to UNDF mode
+	# Switch to UNDF mode
 	msr cpsr_c, #0xdb
-	@ Setup exception stack
 	ldr	sp, =__excstack_addr
 
-	@ Restore mode
+	# Restore mode
 	msr cpsr_c, r0
 	bx	lr
 
 .pool
 
+# UNDF (Undefined instruction handler)
 v_undf:
 	stmfd	sp!, {lr}
 	stmfd	sp, {r0-lr}^
@@ -63,6 +61,7 @@ v_undf:
 	ldmfd	sp!, {lr}
 	movs	pc, lr
 
+# SWI (Syscall handler)
 v_swi:
 	stmfd	sp!, {lr}
 	stmfd	sp, {r0-lr}^
@@ -78,6 +77,8 @@ v_swi:
 	ldmfd	sp!, {lr}
 	movs	pc, lr
 
+
+# ABORT (Instruction)
 v_instr_abrt:
 	stmfd	sp!, {lr}
 	stmfd	sp, {r0-lr}^
@@ -93,6 +94,7 @@ v_instr_abrt:
 	ldmfd	sp!, {lr}
 	subs	pc, lr, #4
 
+# ABORT (Data)
 v_data_abrt:
 	stmfd	sp!, {lr}
 	stmfd	sp, {r0-lr}^
@@ -108,6 +110,7 @@ v_data_abrt:
 	ldmfd	sp!, {lr}
 	subs	pc, lr, #8
 
+# Reserved
 v_reserved:
 	stmfd	sp!, {lr}
 	stmfd	sp, {r0-lr}^
@@ -123,6 +126,7 @@ v_reserved:
 	ldmfd	sp!, {lr}
 	movs	pc, lr
 
+# FIQ handler
 v_fiq:
 	stmfd	sp!, {lr}
 	stmfd	sp, {r0-lr}^
