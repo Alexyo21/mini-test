@@ -1605,7 +1605,10 @@ FRESULT f_open (
 		}
 		if (mode & FA_CREATE_ALWAYS) {
 			dir[DIR_Attr] = 0;					/* Reset attribute */
-			ps = get_fattime();
+			// WARNING: This disables accurate timestamps
+			// ps = get_fattime();
+			ps = 0;
+				
 			ST_DWORD(dir+DIR_CrtTime, ps);		/* Created time */
 			dj.fs->wflag = 1;
 			mode |= FA__WRITTEN;				/* Set file changed flag */
@@ -1872,7 +1875,11 @@ FRESULT f_sync (
 				ST_DWORD(dir+DIR_FileSize, fp->fsize);		/* Update file size */
 				ST_WORD(dir+DIR_FstClusLO, fp->org_clust);	/* Update start cluster */
 				ST_WORD(dir+DIR_FstClusHI, fp->org_clust >> 16);
-				tim = get_fattime();					/* Updated time */
+				
+				// WARNING: This disables accurate timestamps
+				// tim = get_fattime();	                        /* Updated time */
+				tim = 0;
+				
 				ST_DWORD(dir+DIR_WrtTime, tim);
 				fp->flag &= (BYTE)~FA__WRITTEN;
 				fp->fs->wflag = 1;
