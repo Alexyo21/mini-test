@@ -30,7 +30,7 @@ Copyright (C) 2009		John Kelley <wiidev@kelley.ca>
 #include "boot2.h"
 #include "git_version.h"
 
-#define PPC_BOOT_FILE "/bootmii/ppcboot.elf"
+#define PPC_BOOT_FILE "/gumboot/gumboot.elf"
 
 FATFS fatfs;
 
