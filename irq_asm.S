@@ -18,18 +18,19 @@ Copyright (C) 2008, 2009	Hector Martin "marcan" <marcan@marcansoft.com>
 .extern __irqstack_addr
 .extern irq_handler
 
+# Setup stack for IRQ mode
 irq_setup_stack:
-	@ Switch to IRQ mode
+	# Switch to IRQ mode
 	mrs	r0, cpsr
 	msr cpsr_c, #0xd2
 	
-	@ Setup interrupt stack
 	ldr	sp, =__irqstack_addr
 
-	@ Restore mode
+	# Restore mode
 	msr cpsr_c, r0
 	bx	lr
 
+# IRQ exception handler
 v_irq:
 	push	{r0-r3, r9, r12, lr}
 
@@ -38,6 +39,7 @@ v_irq:
 	pop		{r0-r3, r9, r12, lr}
 	subs	pc, lr, #4
 
+# Disable interrupts
 irq_kill:
 	mrs		r1, cpsr
 	and		r0, r1, #(CPSR_IRQDIS|CPSR_FIQDIS)
@@ -45,6 +47,7 @@ irq_kill:
 	msr		cpsr_c, r1
 	bx		lr
 
+# Enable interrupts
 irq_restore:
 	mrs		r1, cpsr
 	bic		r1, r1, #(CPSR_IRQDIS|CPSR_FIQDIS)

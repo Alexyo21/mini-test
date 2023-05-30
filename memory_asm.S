@@ -23,14 +23,14 @@ Copyright (C) 2008, 2009	Hector Martin "marcan" <marcan@marcansoft.com>
 _dc_inval_entries:
 	mcr		p15, 0, r0, c7, c6, 1
 	add		r0, #0x20
-	subs	r1, #1
+	subs		r1, #1
 	bne		_dc_inval_entries
 	bx		lr
 
 _dc_flush_entries:
 	mcr		p15, 0, r0, c7, c10, 1
 	add		r0, #0x20
-	subs	r1, #1
+	subs		r1, #1
 	bne		_dc_flush_entries
 	bx		lr
 
