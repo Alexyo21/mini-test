@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import sys, os, struct
 
@@ -6,8 +6,7 @@ loaderfile = sys.argv[1]
 elffile = sys.argv[2]
 outfile = sys.argv[3]
 
-with open(loaderfile,"rb") as f:
-	data = f.read()
+data = open(loaderfile,"rb").read()
 
 hdrlen, loaderlen, elflen, arg = struct.unpack(">IIII",data[:16])
 
@@ -35,7 +34,7 @@ if loaderlen < len(loader):
 
 if loaderlen > len(loader):
 	print("Padding loader with 0x%x zeroes"%(loaderlen-len(loader)))
-	loader += b"\x00"*(loaderlen-len(loader))
+	loader += b"\0"*(loaderlen-len(loader))
 
 newdata = struct.pack(">IIII", hdrlen, loaderlen, elflen, 0) + hdr[16:]
 newdata += loader
@@ -45,5 +44,6 @@ print("Header: 0x%x bytes"%(hdrlen))
 print("Loader: 0x%x bytes"%(loaderlen))
 print("ELF:    0x%x bytes"%(elflen))
 
-with open(outfile,"wb") as f:
-	f.write(newdata)
+f = open(outfile,"wb")
+f.write(newdata)
+f.close()
