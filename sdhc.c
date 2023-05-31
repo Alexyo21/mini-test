@@ -38,7 +38,7 @@
 
 struct sdhc_host sc_host;
 
-//#define SDHC_DEBUG
+#define SDHC_DEBUG
 
 #define SDHC_COMMAND_TIMEOUT	500
 #define SDHC_TRANSFER_TIMEOUT	5000
