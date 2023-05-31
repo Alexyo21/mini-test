@@ -15,7 +15,7 @@ Copyright (C) 2008, 2009	Sven Peter <svenpeter@gmail.com>
 #include "utils.h"
 #include "memory.h"
 
-//#define SDMMC_DEBUG
+#define SDMMC_DEBUG
 
 #ifdef SDMMC_DEBUG
 static int sdmmcdebug = 0;
