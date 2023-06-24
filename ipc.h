@@ -43,8 +43,8 @@ Copyright (C) 2009		John Kelley <wiidev@kelley.ca>
 #define IPC_DEV_PPC	0x06
 #define IPC_DEV_SDMMC	0x07
 
-//#define IPC_DEV_USER0 0x80
-//#define IPC_DEV_USER1 0x81
+#define IPC_DEV_USER0 0x80
+#define IPC_DEV_USER1 0x81
 
 #define IPC_SYS_PING	0x0000
 #define IPC_SYS_JUMP	0x0001
@@ -74,8 +74,8 @@ Copyright (C) 2009		John Kelley <wiidev@kelley.ca>
 #define IPC_NAND_STATUS	0x0005
 #define IPC_NAND_SETMINPAGE 0x0006
 #define IPC_NAND_GETMINPAGE 0x0007
-//#define IPC_NAND_USER0 0x8000
-//#define IPC_NAND_USER1 0x8001
+#define IPC_NAND_USER0 0x8000
+#define IPC_NAND_USER1 0x8001
 // etc.
 
 #define IPC_SDHC_DISCOVER 0x0000
