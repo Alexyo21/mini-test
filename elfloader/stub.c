@@ -76,7 +76,7 @@ void *_main(void *base)
 	
 	debug_output(0xF1);
 	mem_setswap(1);
- disable_boot0(1);
+        disable_boot0(1);
 	
 	entry = loadelf(elf);
 	debug_output(0xC1);
