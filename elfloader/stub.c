@@ -55,12 +55,10 @@ void *loadelf(const u8 *elf) {
 	return ehdr->e_entry;
 }
 
-/*
 static inline void disable_boot0()
 {
 	set32(HW_BOOT0, 0x1000);
 }
-*/
 
 static inline void mem_setswap()
 {
@@ -78,7 +76,7 @@ void *_main(void *base)
 	
 	debug_output(0xF1);
 	mem_setswap(1);
-//	disable_boot0(1);
+ disable_boot0(1);
 	
 	entry = loadelf(elf);
 	debug_output(0xC1);
