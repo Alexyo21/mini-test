@@ -128,10 +128,10 @@ void ipc_flush(void)
 
 static u32 process_slow(volatile ipc_request *req)
 {
-	//gecko_printf("IPC: process slow_queue @ %p\n",req);
+	gecko_printf("IPC: process slow_queue @ %p\n",req);
 
-	//gecko_printf("IPC: req %08x %08x [%08x %08x %08x %08x %08x %08x]\n", req->code, req->tag,
-	//	req->args[0], req->args[1], req->args[2], req->args[3], req->args[4], req->args[5]);
+	gecko_printf("IPC: req %08x %08x [%08x %08x %08x %08x %08x %08x]\n", req->code, req->tag,
+	req->args[0], req->args[1], req->args[2], req->args[3], req->args[4], req->args[5]);
 
 	switch(req->device) {
 		case IPC_DEV_SYS:
@@ -210,12 +210,12 @@ static void process_in(void)
 {
 	volatile ipc_request *req = &in_queue[in_head];
 
-	//gecko_printf("IPC: process in %d @ %p\n",in_head,req);
+	gecko_printf("IPC: process in %d @ %p\n",in_head,req);
 
 	dc_inval_block_fast((void*)req);
 
-	//gecko_printf("IPC: req %08x %08x [%08x %08x %08x %08x %08x %08x]\n", req->code, req->tag,
-	//	req->args[0], req->args[1], req->args[2], req->args[3], req->args[4], req->args[5]);
+	gecko_printf("IPC: req %08x %08x [%08x %08x %08x %08x %08x %08x]\n", req->code, req->tag,
+	req->args[0], req->args[1], req->args[2], req->args[3], req->args[4], req->args[5]);
 
 	if(req->flags & IPC_FAST) {
 		switch(req->device) {
@@ -323,8 +323,8 @@ void ipc_initialize(void)
 void ipc_shutdown(void)
 {
 	// Don't kill message registers so our PPC side doesn't get confused
-	//write32(HW_IPC_ARMMSG, 0);
-	//write32(HW_IPC_PPCMSG, 0);
+	// write32(HW_IPC_ARMMSG, 0);
+	// write32(HW_IPC_PPCMSG, 0);
 	// Do kill flags so Nintendo's SDK doesn't get confused
 	write32(HW_IPC_PPCCTRL, IPC_CTRL_RESET);
 	write32(HW_IPC_ARMCTRL, IPC_CTRL_RESET);
