@@ -18,7 +18,7 @@ Copyright (C) 2008, 2009	Sven Peter <svenpeter@gmail.com>
 #define SDMMC_DEBUG
 
 #ifdef SDMMC_DEBUG
-static int sdmmcdebug = 0;
+static int sdmmcdebug = 1;
 #define DPRINTF(n,s)	do { if ((n) <= sdmmcdebug) gecko_printf s; } while (0)
 #else
 #define DPRINTF(n,s)	do {} while(0)
