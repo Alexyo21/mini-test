@@ -591,8 +591,8 @@ sdhc_start_command(struct sdhc_host *hp, struct sdmmc_command *cmd)
 		HWRITE2(hp, SDHC_BLOCK_COUNT, blkcount);
 	HWRITE4(hp, SDHC_ARGUMENT, cmd->c_arg);
 	HWRITE4(hp, SDHC_TRANSFER_MODE, ((u32)command<<16)|mode);
-//	HWRITE2(hp, SDHC_COMMAND, command);
-//	HWRITE2(hp, SDHC_TRANSFER_MODE, mode);
+	HWRITE2(hp, SDHC_COMMAND, command);
+	HWRITE2(hp, SDHC_TRANSFER_MODE, mode);
 
 	return 0;
 }
@@ -618,7 +618,7 @@ sdhc_transfer_data(struct sdhc_host *hp, struct sdmmc_command *cmd)
 			}
 
 			if (ISSET(status, SDHC_TRANSFER_COMPLETE)) {
-//				gecko_printf("got a TRANSFER_COMPLETE: %08x\n", status);
+				gecko_printf("got a TRANSFER_COMPLETE: %08x\n", status);
 				break;
 			}
 			if (ISSET(status, SDHC_DMA_INTERRUPT)) {
@@ -713,7 +713,7 @@ sdhc_wait_intr_debug(const char *funcname, int line, struct sdhc_host *hp, int m
 	/* Command timeout has higher priority than command complete. */
 	if (ISSET(status, SDHC_ERROR_INTERRUPT)) {
 		gecko_printf("resetting due to error interrupt\n");
-//		sdhc_dump_regs(hp);
+		sdhc_dump_regs(hp);
 		
 		hp->intr_error_status = 0;
 		(void)sdhc_soft_reset(hp, SDHC_RESET_DAT|SDHC_RESET_CMD);
@@ -723,10 +723,10 @@ sdhc_wait_intr_debug(const char *funcname, int line, struct sdhc_host *hp, int m
 	/* Command timeout has higher priority than command complete. */
 	if (ISSET(status, SDHC_ERROR_TIMEOUT)) {
 		gecko_printf("not resetting due to timeout\n");
-//		sdhc_dump_regs(hp);
+  sdhc_dump_regs(hp);
 		
 		hp->intr_error_status = 0;
-//		(void)sdhc_soft_reset(hp, SDHC_RESET_DAT|SDHC_RESET_CMD);
+ (void)sdhc_soft_reset(hp, SDHC_RESET_DAT|SDHC_RESET_CMD);
 		status = 0;
 	}
 
@@ -742,7 +742,7 @@ sdhc_intr(void)
 	u_int16_t status;
 
 	DPRINTF(1,("shdc_intr():\n"));
-//	sdhc_dump_regs(&sc_host);
+ sdhc_dump_regs(&sc_host);
 		
 	/* Find out which interrupts are pending. */
 	status = HREAD2(&sc_host, SDHC_NINTR_STATUS);
