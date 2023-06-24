@@ -55,7 +55,7 @@ u32 _main(void *base)
 		read32(0xffffff0c), read32(0xffffff10), read32(0xffffff14));
 
 	irq_initialize();
-//	irq_enable(IRQ_GPIO1B);
+ irq_enable(IRQ_GPIO1B);
 	irq_enable(IRQ_GPIO1);
 	irq_enable(IRQ_RESET);
 	irq_enable(IRQ_TIMER);
