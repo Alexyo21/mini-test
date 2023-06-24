@@ -84,17 +84,17 @@ void _ahb_flush_to(enum AHBDEV dev) {
 	switch(dev) {
 		case AHB_STARLET: mask = 0x8000; break;
 		case AHB_1: mask = 0x4000; break;
-		//case 2: mask = 0x0001; break;
+		case 2: mask = 0x0001; break;
 		case AHB_NAND: mask = 0x0002; break;
 		case AHB_AES: mask = 0x0004; break;
 		case AHB_SHA1: mask = 0x0008; break;
-		//case 6: mask = 0x0010; break;
-		//case 7: mask = 0x0020; break;
-		//case 8: mask = 0x0040; break;
+		case 6: mask = 0x0010; break;
+		case 7: mask = 0x0020; break;
+		case 8: mask = 0x0040; break;
 		case AHB_SDHC: mask = 0x0080; break;
-		//case 10: mask = 0x0100; break;
-		//case 11: mask = 0x1000; break;
-		//case 12: mask = 0x0000; break;
+		case 10: mask = 0x0100; break;
+		case 11: mask = 0x1000; break;
+		case 12: mask = 0x0000; break;
 		default:
 			gecko_printf("ahb_invalidate(%d): Invalid device\n", dev);
 			return;
@@ -280,7 +280,7 @@ u32 dma_addr(void *p)
 			addr |= 0x0d400000;
 			break;
 	}
-	//gecko_printf("DMA to %p: address %08x\n", p, addr);
+	gecko_printf("DMA to %p: address %08x\n", p, addr);
 	return addr;
 }
 
@@ -307,7 +307,7 @@ void map_section(u32 from, u32 to, u32 size, u32 attributes)
 	}
 }
 
-//#define NO_CACHES
+#define NO_CACHES
 
 void mem_initialize(void)
 {
