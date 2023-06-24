@@ -409,7 +409,7 @@ int sdmmc_get_sectors(void)
 		return -1;
 	}
 
- sdhc_error(sdhc->reg_base, "num sectors = %u", sdhci->num_sectors);
+// sdhc_error(sdhci->reg_base, "num sectors = %u", sdhci->num_sectors);
 	
 	return card.num_sectors;
 }
