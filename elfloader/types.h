@@ -22,6 +22,12 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #ifndef __TYPES_H__
 #define __TYPES_H__
 
+#include <inttypes.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdarg.h>
+#include <stdalign.h>
+
 typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;
