@@ -12,7 +12,7 @@ CFLAGS += -DGECKO_LFCR
 ASFLAGS += -D_LANGUAGE_ASSEMBLY
 CFLAGS += -DCAN_HAZ_IRQ -DCAN_HAZ_IPC
 LDSCRIPT = mini.ld
-LIBS = -lgcc
+LIBS = -lgcc -lm
 
 ELFLOADER = elfloader/elfloader.bin
 MAKEBIN = $(CURDIR)/makebin.py
