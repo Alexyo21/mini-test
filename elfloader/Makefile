@@ -2,7 +2,7 @@ include ../starlet.mk
 
 CFLAGS += -fpic
 LDSCRIPT = stub.ld
-LIBS = -lgcc
+LIBS = -lgcc -lm
 
 TARGET = elfloader.elf
 TARGET_BIN = elfloader.bin
